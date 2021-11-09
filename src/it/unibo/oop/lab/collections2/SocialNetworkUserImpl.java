@@ -1,7 +1,13 @@
 package it.unibo.oop.lab.collections2;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 
@@ -29,7 +35,8 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
      * 
      * think of what type of keys and values would best suit the requirements
      */
-
+	private Map<String, Set<U>> followed;
+	
     /*
      * [CONSTRUCTORS]
      * 
@@ -40,7 +47,6 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
      * 
      * 2) Define a further constructor where age is defaulted to -1
      */
-
     /**
      * Builds a new {@link SocialNetworkUserImpl}.
      * 
@@ -56,8 +62,13 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
         super(name, surname, user, userAge);
+        followed = new HashMap<>();
     }
 
+    public SocialNetworkUserImpl(final String name, final String surname, final String user) {
+        this(name, surname, user, -1);
+    }
+    
     /*
      * [METHODS]
      * 
@@ -66,17 +77,31 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
 
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-        return false;
+		Set<U> groupList = followed.get(circle);
+		if( groupList == null) {
+			groupList = new HashSet<>();
+			followed.put(circle, groupList);
+		}
+		return groupList.add(user);
+
+    	
     }
 
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+    	if(followed.get(groupName) == null)
+    		return Collections.emptyList();
+    	return new ArrayList<>(followed.get(groupName));
     }
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
+        List<U> followedUsers = new ArrayList<>();
+        
+        for( Set<U> inGroupFollowers : followed.values()) {
+        	followedUsers.addAll(inGroupFollowers);
+        }
+    	return followedUsers;
     }
 
 }
