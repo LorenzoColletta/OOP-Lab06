@@ -16,10 +16,10 @@ public class NotEnoughBatteryException extends IllegalStateException {
 	}
 	
 	public String toString() {
-        return "Can not move to position(" + this.currentLevel + "," + this.consumption + "). Not enough battery.";
+        return "Current battery level: " + this.currentLevel + ", Battery level required: " + this.consumption + ". Not enough battery.";
 	}
 	
 	public String getMessage() {
-		return "Not Enough Battery left.";
+		return this.toString();
 	}
 }

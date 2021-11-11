@@ -38,7 +38,11 @@ public final class BaseRobotTest {
          */
         for (int i = 0; i < RobotEnvironment.WORLD_X_UPPER_LIMIT; i++) {
             // check if position if coherent
-            assertTrue("[CHECKING MOVING RIGHT]", r1.moveRight());
+            try { 
+            	r1.moveRight();
+            }catch(NotEnoughBatteryException e){
+            	Assert.assertNotNull(e.getMessage());
+            }
         }
         // reached the right limit of the world
         try {
@@ -55,7 +59,11 @@ public final class BaseRobotTest {
          */
         for (int i = 0; i < RobotEnvironment.WORLD_Y_UPPER_LIMIT; i++) {
             // check if position if coherent
-            assertTrue("[CHECKING MOVING UP]", r1.moveUp());
+            try {
+            	r1.moveUp();	
+            }catch(NotEnoughBatteryException e ) {
+            	Assert.assertNotNull(e.getMessage());    	
+            }
         }
         // reached the upper limit of the world
         try {
@@ -91,7 +99,13 @@ public final class BaseRobotTest {
         // verify position: same as start position
         assertEquals("[CHECKING ROBOT INIT POS Y]", 0, r2.getEnvironment().getCurrPosY());
         // out of world: returns false
-        assertFalse("[CHECKING MOVING UP]", r2.moveUp());
+        try {
+            r2.moveUp();        	
+        }catch(NotEnoughBatteryException e) {
+        	Assert.assertNotNull(e);        	
+        }catch(PositionOutOfBoundException e) {
+        	Assert.assertNotNull(e);
+        }
         // recharge battery
         r2.recharge();
         // verify battery level
