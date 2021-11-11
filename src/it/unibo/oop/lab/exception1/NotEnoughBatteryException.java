@@ -6,17 +6,17 @@ public class NotEnoughBatteryException extends IllegalStateException {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-    private final int x;
-    private final int y;
+    private final Double currentLevel;
+    private final Double consumption;
     
-	public NotEnoughBatteryException(final int initX, final int initY) {
+	public NotEnoughBatteryException(final Double currentLevel, final Double consumption) {
 		super();
-		this.x = initX;
-		this.y = initY;
+		this.currentLevel = currentLevel;
+		this.consumption = consumption;
 	}
 	
 	public String toString() {
-        return "Can not move to position(" + this.x + "," + this.y + "). Not enough battery.";
+        return "Can not move to position(" + this.currentLevel + "," + this.consumption + "). Not enough battery.";
 	}
 	
 	public String getMessage() {
