@@ -13,7 +13,7 @@ public final class UseGraph {
      *            ignored
      */
     public static void main(final String... args) {
-        final Graph<String> g = null; // new GraphImpl<>();
+        final Graph<String> g = new DirectedGraph<>(); // new GraphImpl<>();
         g.addNode("a");
         g.addNode("b");
         g.addNode("c");
@@ -32,10 +32,10 @@ public final class UseGraph {
         /*
          * ["d","a"], in any order
          */
-        System.out.println(g.linkedNodes("c"));
+        System.out.println("linked Nodes: " + g.linkedNodes("c"));
         /*
          * Must print either the path b,c,a or b,c,d,e,a
          */
-        System.out.println(g.getPath("b", "a"));
+        System.out.println("Path: " + g.getPath("b", "a"));
     }
 }
